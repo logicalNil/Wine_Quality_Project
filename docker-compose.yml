@@ -13,7 +13,7 @@ services:
       - MLFLOW_TRACKING_URI=http://localhost:5000
 
   mlflow:
-    image: mlflow/mlflow:latest
+    image: mlflow/mlflow:latest 
     ports:
       - "5000:5000"
     volumes:
