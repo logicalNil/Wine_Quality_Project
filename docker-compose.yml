@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   wine-api:
     build: .
@@ -10,15 +8,15 @@ services:
       - ./logs:/app/logs
       - ./data:/app/data
     environment:
-      - MLFLOW_TRACKING_URI=http://localhost:5000
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
 
   mlflow:
-    image: mlflow/mlflow:latest 
+    image: mlflow/mlflow:2.9.2
     ports:
       - "5000:5000"
     volumes:
       - ./mlruns:/mlflow
-    command: mlflow server --host 0.0.0.0 --port 5000
+    command: [ "mlflow", "server", "--host", "0.0.0.0", "--port", "5000" ]
 
   prometheus:
     image: prom/prometheus:latest

@@ -2,6 +2,8 @@ from fastapi import FastAPI, Request, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import pandas as pd
+import os
+from pathlib import Path
 import numpy as np
 import joblib
 import time
@@ -12,8 +14,8 @@ from datetime import datetime
 from prometheus_client import Counter, Histogram, generate_latest, REGISTRY
 from prometheus_client.exposition import CONTENT_TYPE_LATEST
 
-from .schemas import WineFeatures, PredictionResponse
-from .database import log_prediction
+from api.schemas import WineFeatures, PredictionResponse
+from api.database import log_prediction
 
 # Set up logging
 logging.basicConfig(
@@ -34,11 +36,15 @@ PREDICTION_COUNT = Counter('prediction_count', 'Prediction count by quality clas
 app = FastAPI(title="Wine Quality API", version="1.0.0")
 
 # Load model
+base_dir = Path(__file__).parent.parent  # Go up to project root from api/
+model_path = base_dir / "models" / "best_model.pkl"
+
+# Load model
 try:
-    model = joblib.load('models/best_model.pkl')
-    logger.info("Model loaded successfully")
+    model = joblib.load(str(model_path))
+    logger.info(f"Model loaded successfully from {model_path}")
 except Exception as e:
-    logger.error(f"Error loading model: {e}")
+    logger.error(f"Error loading model from {model_path}: {e}")
     model = None
 
 class_labels = {
@@ -128,4 +134,4 @@ async def log_requests(request: Request, call_next):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
