@@ -652,3 +652,4 @@
 2025-08-21 16:18:05,395 - __main__ - ERROR - Error loading model: [Errno 2] No such file or directory: 'models/best_model.pkl'
 2025-08-21 16:19:26,494 - __main__ - ERROR - Error loading model: [Errno 2] No such file or directory: 'models/best_model.pkl'
 2025-08-21 16:23:01,646 - __main__ - INFO - Model loaded successfully from C:\Users\nilay\DataspellProjects\Wine_Quality_Project\models\best_model.pkl
+2025-08-22 20:13:44,751 - __main__ - INFO - Model loaded successfully from C:\Users\nilay\DataspellProjects\Wine_Quality_Project\models\best_model.pkl
